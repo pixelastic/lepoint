@@ -5,9 +5,13 @@ require 'json'
 require 'nokogiri'
 
 class Html2Json
-  def initialize(api_key, file)
-    @api_key = api_key
-    @file = file
+  def initialize(*args)
+    if args.length != 2
+      puts 'Usage: ./parse_and_push apiKey source.html'
+      exit 1
+    end
+    @api_key = args[0]
+    @file = args[1]
   end
 
   def get_data(issue, name)
@@ -23,22 +27,25 @@ class Html2Json
       index = Algolia::Index.new('lepoint')
       settings = {
         attributesToIndex: %w(
-          titles.coves,
-          titles.france,
-          titles.world,
-          titles.society,
-          titles.economy,
-          titles.culture,
-          titles.tendancies,
-          titles.postillon,
-          titles.bonus
+          unordered(titles.cover),
+          unordered(titles.france),
+          unordered(titles.world),
+          unordered(titles.society),
+          unordered(titles.economy),
+          unordered(titles.culture),
+          unordered(titles.tendancies),
+          unordered(titles.postillon),
+          unordered(titles.bonus),
         ),
         customRanking: [
           'desc(numero)'
         ]
       }
-      index.set_settings(settings)
       index.clear_index
+      puts 'Updating settings'
+      index.set_settings(settings)
+      puts 'Pushing objects'
+      ap data
       index.add_objects(data)
   end
 
@@ -68,8 +75,9 @@ class Html2Json
 
   def run
     doc = Nokogiri::HTML(File.open(@file), nil, Encoding::UTF_8.to_s)
+    puts 'Parsing HTML'
     records = get_records(doc)
     push_to_algolia(records)
   end
 end
-Html2Json.new(ARGV[0]).run
+Html2Json.new(*ARGV).run
