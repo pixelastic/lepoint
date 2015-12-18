@@ -54,10 +54,10 @@ class Html2Json
     issues.map do |issue|
       {
         image: get_data(issue, 'image'),
-        numero: get_data(issue, 'numero'),
-        day: get_data(issue, 'day'),
+        numero: get_data(issue, 'numero').to_i,
+        day: get_data(issue, 'day').to_i,
         month: get_data(issue, 'month'),
-        year: get_data(issue, 'year'),
+        year: get_data(issue, 'year').to_i,
         titles: {
           cover: get_data(issue, '1'),
           france: get_data(issue, '2'),
