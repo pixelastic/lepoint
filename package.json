@@ -1,0 +1,27 @@
+{
+  "name": "lepoint",
+  "version": "0.0.1",
+  "description": "Recherche dans les couvertures du Point",
+  "author": "Tim \"pixelastic\" Carry",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:pixelastic/lepoint.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pixelastic/lepoint/issues"
+  },
+  "engines": {
+    "node": "0.10.21",
+    "npm": "1.3.11"
+  },
+  "scripts": {
+    "gh-pages": "./scripts/gh-pages"
+  },
+  "devDependencies": {
+    "gh-pages": "^0.8.0"
+  },
+  "dependencies": {
+  }
+}
+

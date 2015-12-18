@@ -1,0 +1,75 @@
+#!/usr/bin/env ruby
+require 'algoliasearch'
+require 'awesome_print'
+require 'json'
+require 'nokogiri'
+
+class Html2Json
+  def initialize(api_key, file)
+    @api_key = api_key
+    @file = file
+  end
+
+  def get_data(issue, name)
+    input = issue.css("input[name=data-#{name}]")
+    return nil unless input.length
+    input.attr('value').text
+  end
+
+  def push_to_algolia(data)
+      Algolia.init(api_key: @api_key,
+                   application_id: 'O3F8QXYK6R')
+
+      index = Algolia::Index.new('lepoint')
+      settings = {
+        attributesToIndex: %w(
+          titles.coves,
+          titles.france,
+          titles.world,
+          titles.society,
+          titles.economy,
+          titles.culture,
+          titles.tendancies,
+          titles.postillon,
+          titles.bonus
+        ),
+        customRanking: [
+          'desc(numero)'
+        ]
+      }
+      index.set_settings(settings)
+      index.clear_index
+      index.add_objects(data)
+  end
+
+  def get_records(doc)
+    issues = doc.css('article')
+    issues.map do |issue|
+      {
+        image: get_data(issue, 'image'),
+        numero: get_data(issue, 'numero'),
+        day: get_data(issue, 'day'),
+        month: get_data(issue, 'month'),
+        year: get_data(issue, 'year'),
+        titles: {
+          cover: get_data(issue, '1'),
+          france: get_data(issue, '2'),
+          world: get_data(issue, '3'),
+          society: get_data(issue, '4'),
+          economy: get_data(issue, '5'),
+          culture: get_data(issue, '6'),
+          tendancies: get_data(issue, '7'),
+          postillon: get_data(issue, '8'),
+          bonus: get_data(issue, '9')
+        }
+      }
+    end
+  end
+
+  def run
+    doc = Nokogiri::HTML(File.open(@file), nil, Encoding::UTF_8.to_s)
+    records = get_records(doc)
+    push_to_algolia(records)
+  end
+end
+Html2Json.new(ARGV[0]).run
