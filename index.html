@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Le Point</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.5/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.css" />
+  <link rel="stylesheet" type="text/css" href="main.css" />
+  <!--[if lte IE 9]>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <div class="container-fluid">
+    <header class="content-wrapper">
+      <img src="logo.svg" class="logo"/>
+      <div class="input-group">
+        <input type="text" class="form-control" id="q" />
+        <span class="input-group-btn">
+          <button class="btn btn-default"><i class="fa fa-search"></i></button>
+        </span>
+      </div>
+       <div id="stats" class="stats"></div>
+    </header>
+
+    <div class="content-wrapper">
+      <div id="hits"></div>
+    </div>
+  </div>
+
+  <script id="hitTemplate" language="x-template">
+    <article class="hit">
+      <div class="picture-wrapper">
+        <img src="{{image}}" />
+      </div>
+      <div class="desc-wrapper">
+        <div class="name">{{{_highlightResult.titles.cover.value}}}</div>
+        <div class="numero">N°{{numero}} - {{day}} {{month}} {{year}}</div>
+        <ul>
+          <li><strong>France</strong>{{{_highlightResult.titles.france.value}}}</li>
+          <li><strong>Monde</strong>{{{_highlightResult.titles.world.value}}}</li>
+          <li><strong>Société</strong>{{{_highlightResult.titles.society.value}}}</li>
+          <li><strong>Économie</strong>{{{_highlightResult.titles.economy.value}}}</li>
+          <li><strong>Culture</strong>{{{_highlightResult.titles.culture.value}}}</li>
+          <li><strong>Tendance</strong>{{{_highlightResult.titles.tendancies.value}}}</li>
+          <li><strong>Le Postillon</strong>{{{_highlightResult.titles.postillon.value}}}</li>
+        </ul>
+      </div>
+    </article>
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery/1.11.3/jquery.min.js"></script>
+  <script src="search.js"></script>
+
+</body>
+</html>
