@@ -58,6 +58,12 @@ header {
     margin-left: 20px;
     color: white;
   }
+  header .algolia {
+    line-height: 40px;
+    float: right;
+    margin-left: 20px;
+    color: white;
+  }
 #hits {
   padding: 70px 10px 10px 10px; }
 
