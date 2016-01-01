@@ -16,12 +16,12 @@
     "npm": "1.3.11"
   },
   "scripts": {
-    "gh-pages": "./scripts/gh-pages"
+    "deploy": "./scripts/gh-pages",
+    "serve": "http-server ./public"
   },
   "devDependencies": {
-    "gh-pages": "^0.8.0"
+    "gh-pages": "^0.8.0",
+    "http-server": "^0.8.5"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
-
